@@ -1,7 +1,13 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'fs';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
 const { createHash } = await import('crypto');
 
-const FILE_PATH = 'src/hash/files/fileToCalculateHashFor.txt';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const FILE_PATH = path.join(__dirname, 'files', 'fileToCalculateHashFor.txt');
 
 export const calculateHash = async () => {
   const fileBuffer = readFileSync(FILE_PATH);

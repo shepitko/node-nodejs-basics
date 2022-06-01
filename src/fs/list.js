@@ -1,18 +1,21 @@
-import fs from 'fs';
+import { readdir } from 'fs/promises';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ERR_MESSAGE = 'FS operation failed';
-const FOLDER = 'src/fs/files';
+const FOLDER = path.join(__dirname, 'files');
 
 export const list = async () => {
-  fs.readdir(FOLDER, (err, files) => {
-    try {
-      if (err) throw new Error(ERR_MESSAGE);
+  try {
+    const files = await readdir(FOLDER);
 
-      console.log(files);
-    } catch (e) {
-      console.error(e);
-    }
-  });
+    console.log(files);
+  } catch (e) {
+    if (e) throw new Error(ERR_MESSAGE);
+  }
 };
 
 await list();

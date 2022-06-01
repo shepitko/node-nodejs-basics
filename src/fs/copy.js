@@ -1,9 +1,13 @@
 import { existsSync, mkdirSync, readdirSync, statSync, copyFileSync } from 'fs';
-import path from "path";
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ERR_MESSAGE = 'FS operation failed';
-const FOLDER = 'src/fs/files';
-const DESTINATION_FOLDER = 'src/fs/files_copy';
+const FOLDER = path.join(__dirname, 'files');
+const DESTINATION_FOLDER = path.join(__dirname, 'files_copy');
 
 export const copy = async () => {
 

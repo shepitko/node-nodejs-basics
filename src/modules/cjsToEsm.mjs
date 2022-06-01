@@ -6,8 +6,8 @@ import { createServer as createServerHttp } from 'http';
 import './files/c.js';
 
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const a = JSON.parse(fs.readFileSync(path.join(__dirname, 'files', 'a.json')));
 const b = JSON.parse(fs.readFileSync(path.join(__dirname, 'files', 'b.json')));
 
