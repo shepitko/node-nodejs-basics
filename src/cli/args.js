@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 export const parseArgs = () => {
   const VARIABLE_PATTERN = /^--/;
 

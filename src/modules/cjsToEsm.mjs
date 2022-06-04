@@ -25,6 +25,3 @@ console.log(`Path to current directory is ${__dirname}`);
 export const createMyServer = createServerHttp((_, res) => {
     res.end('Request accepted');
 });
-
-
-
