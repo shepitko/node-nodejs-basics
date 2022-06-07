@@ -1,0 +1,21 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "This repository is the part of nodejs-assignments https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/file-manager/assignment.md",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shepitko/node-nodejs-basics"
+  },
+  "keywords": ["nodejs", "assignments", "alreadybored"],
+  "author": "shepitko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shepitko/node-nodejs-basics/issues"
+  },
+  "homepage": "https://github.com/shepitko/node-nodejs-basics#readme"
+}
