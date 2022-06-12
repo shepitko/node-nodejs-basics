@@ -39,11 +39,13 @@ const initProgram = () => {
 	// Main input controller/switcher
 	input.on('data', (data) => {
 		const inputStr = data.toString().replace(/(\r\n|\n|\r)/gm, ""); // Remove line breaks;
-		const cmd = inputStr.split(" ")[0];
-		if (!listOfCommands.includes(cmd)) return output.write(WRONG_COMMAND);
+		const [cmd, args] = inputStr.split(" ") || [];
 
 		try {
-			if (navigationCmds.includes(cmd)) return handleNavigationActions({ inputStr, output });
+
+			if (!listOfCommands.includes(cmd)) throw new Error(WRONG_COMMAND);
+
+			if (navigationCmds.includes(cmd)) return handleNavigationActions({ cmd, args, output });
 			if (baseFileOpersCmds.includes(cmd)) return handleFileBaseActions({ inputStr, output });
 			if (osCmds.includes(cmd)) return handleOSActions({ inputStr, output });
 			if (hashCmds.includes(cmd)) return handleHashActions({ inputStr, output });
@@ -51,8 +53,7 @@ const initProgram = () => {
 
 			doAlternativeEndProcess(inputStr);
 		} catch (error) {
-			if (error !== WRONG_COMMAND) output.write(EXECUTION_ERROR);
-			output.write(error);
+			output.write(error.toString());
 		}
 	});
 
