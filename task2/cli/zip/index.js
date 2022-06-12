@@ -1,3 +1,8 @@
-export const handleZipActions = ({ inputString, output }) => {
-	output.write('ZIP baby!!');
+export const handleZipActions = ({ cmd, args, output }) => {
+	if (cmd === COMPRESS) {
+	}
+
+	if (cmd === DECOMPRESS) {
+	}
+
 }
