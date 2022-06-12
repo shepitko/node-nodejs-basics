@@ -1,20 +1,28 @@
 import { readFile, rename as rn, rm } from 'fs/promises';
-import { existsSync, mkdirSync, readdirSync, statSync, copyFileSync, open, writeFile, close } from 'fs';
+import { existsSync, mkdirSync, readdirSync, statSync, copyFileSync, open, writeFile, close, createReadStream, createWriteStream } from 'fs';
 import path from 'path';
 import { cwd } from 'process';
 
 import { ADD, CAT, CP, MV, RM, RN } from '../../enums/commands.js';
-import { EXECUTION_ERROR } from '../../enums/messages.js';
+import { EXECUTION_ERROR, FILE_CREATED_MESSAGE } from '../../enums/messages.js';
 
 const ERR_CODE_EXIST = 'EEXIST';
 
 export const handleFileBaseActions = async ({ cmd, args, output }) => {
 	if (cmd === CAT) {
-		const content = await readFile(path.join(cwd(), args[0]));
+		try {
+			const content = await readFile(path.join(cwd(), args[0]));
 
-		output.write(`${content.toString('utf-8')}\n`);
-		// Test case: 
+			output.write(`${content.toString('utf-8')}\n`);
+		} catch (e) {
+			output.write(EXECUTION_ERROR);
+		}
+
+		// Test case:
+		// -- success --
 		// cat files/fileToCompress.txt
+		// -- fail --
+		// cat sfdfads
 	}
 
 	if (cmd === ADD) {
@@ -27,12 +35,18 @@ export const handleFileBaseActions = async ({ cmd, args, output }) => {
 
 				writeFile(fd, "", 'utf8', (err) => {
 					if (!err) return close(fd, (err) => {
-						if (!err) console.log(FILE_CREATED_MESSAGE);
+						if (!err) output.write(FILE_CREATED_MESSAGE);
 					});
 				});
 			} catch (e) {
 				output.write(EXECUTION_ERROR);
 			}
+
+			// Test case:
+			// -- success --
+			// add files/newFile.txt
+			// -- fail --
+			// add files/newFile.txt again
 		});
 	}
 
@@ -89,7 +103,22 @@ export const handleFileBaseActions = async ({ cmd, args, output }) => {
 	}
 
 	if (cmd === MV) {
+		const [from, to] = args;
+		const sourceFrom = path.join(cwd(), from);
+		const destTo = path.join(cwd(), to);
 
+		const source = createReadStream(sourceFrom);
+		const dest = createWriteStream(destTo);
+
+		source.pipe(dest);
+
+		source.on('error', () => output.write(EXECUTION_ERROR));
+
+		// Test case:
+		// -- sucess --
+		// mv files/moveMe.txt files/folderForMoving/moveMe
+		// -- fail --
+		// mv afdsf dsfsdf
 	}
 
 	if (cmd === RM) {
