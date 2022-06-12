@@ -31,18 +31,18 @@ const initProgram = () => {
 	// Main input controller/switcher
 	input.on('data', (data) => {
 		const inputStr = data.toString().replace(/(\r\n|\n|\r)/gm, ""); // Remove line breaks;
-		const [cmd, args] = inputStr.split(" ") || [];
+		const [cmd, ...args] = inputStr.split(" ") || [];
 
 		try {
 			if (!listOfCommands.includes(cmd)) throw new Error(WRONG_COMMAND);
 
 			if (navigationCmds.includes(cmd)) return handleNavigationActions({ cmd, args, output });
-			if (baseFileOpersCmds.includes(cmd)) return handleFileBaseActions({ inputStr, output });
-			if (osCmds.includes(cmd)) return handleOSActions({ cmd, args, output });
-			if (hashCmds.includes(cmd)) return handleHashActions({ inputStr, output });
-			if (zipCmds.includes(cmd)) return handleZipActions({ inputStr, output });
+			if (baseFileOpersCmds.includes(cmd)) return handleFileBaseActions({ cmd, args, output });
+			if (osCmds.includes(cmd)) return handleOSActions({ args, output });
+			if (hashCmds.includes(cmd)) return handleHashActions({ args, output });
+			if (zipCmds.includes(cmd)) return handleZipActions({ cmd, args, output });
 
-			endOfProgram({ inputStr, msg: farewellMsg });
+			endOfProgram({ inputStr, msg: farewellMsg, output });
 		} catch (error) {
 			output.write(error.toString());
 		}

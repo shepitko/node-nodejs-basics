@@ -5,14 +5,14 @@ import {
 } from '../../enums/commands.js';
 import { WRONG_COMMAND } from '../../enums/messages.js';
 
-export const handleOSActions = ({ cmd, args, output }) => {
-	if (!osSubCmds.includes(args)) throw new Error(WRONG_COMMAND);
+export const handleOSActions = ({ args, output }) => {
+	if (!osSubCmds.includes(args[0])) throw new Error(WRONG_COMMAND);
 
-	if (args === OS_EOL) {
+	if (args[0] === OS_EOL) {
 		output.write(`${JSON.stringify(EOL)}\n`);
 	}
 
-	if (args === OS_CPUS) {
+	if (args[0] === OS_CPUS) {
 		const cpuInfo = cpus();
 		const cpuDesc = `
 Amount of CPUs: ${cpuInfo.length}\n
@@ -22,15 +22,15 @@ ${cpuInfo.map((cpu, idx) => `${idx + 1} | ${cpu.model} | ${cpu.speed} MHz |`).jo
 		output.write(cpuDesc);
 	}
 
-	if (args === OS_HOMEDIR) {
+	if (args[0] === OS_HOMEDIR) {
 		output.write(`${homedir()}\n`);
 	}
 
-	if (args === OS_USERNAME) {
+	if (args[0] === OS_USERNAME) {
 		output.write(`${userInfo().username}\n`);
 	}
 
-	if (args === OS_ARCHITECTURE) {
+	if (args[0] === OS_ARCHITECTURE) {
 		output.write(`${arch()}\n`);
 	}
 }

@@ -1,5 +1,4 @@
 import { readdir } from 'fs/promises';
-import path from 'path';
 import { cwd, chdir } from 'process'
 import { CD, LS, UP } from '../../enums/commands.js';
 import { EXECUTION_ERROR, WRONG_COMMAND } from '../../enums/messages.js';
@@ -7,7 +6,7 @@ import { whereAmI } from './whereAmI.js';
 
 export const handleNavigationActions = async ({ cmd, args, output }) => {
 	try {
-		if (!args && cmd === CD) {
+		if (!args[0] && cmd === CD) {
 			throw new Error(WRONG_COMMAND);
 		}
 
@@ -17,7 +16,7 @@ export const handleNavigationActions = async ({ cmd, args, output }) => {
 		}
 
 		if (cmd === CD) {
-			let folder = args;
+			let folder = args[0];
 
 			try {
 				chdir(folder);
