@@ -1,7 +1,3 @@
-const getArgs = (args) => {
-
-}
-
 export const getUserName = () => {
 	const args = process.argv;
 	const userName = args.find(arg => arg.startsWith('--username=')) || "";
