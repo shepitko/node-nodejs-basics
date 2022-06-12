@@ -5,3 +5,4 @@ export const WRONG_COMMAND = '\nInvalid input\n';
 export const EXECUTION_ERROR = '\nOperation failed\n';
 export const COMPRESS_MESSAGE = '\nFile was compressed\n'
 export const DECOMPRESS_MESSAGE = '\nFile was decompressed\n'
+export const FILE_CREATED_MESSAGE = '\nFile was created\n'

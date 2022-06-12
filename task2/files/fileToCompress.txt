@@ -1,1 +1,4 @@
 Compress me
+second line
+text
+test
